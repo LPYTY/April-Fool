@@ -65,11 +65,11 @@ void CQuitButton::OnMouseHover(UINT nFlags, CPoint point)
 	RECT movedrc;
 	if (m_bismoved)
 	{
-		movedrc = { rc.left - 5 - prc.left,rc.top - prc.top,rc.right - 5 - prc.left,rc.bottom - prc.top };
+		movedrc = { prcc.right + rc.left - rc.right,prcc.bottom + rc.top - rc.bottom,prcc.right,prcc.bottom };
 	}
 	else
 	{
-		movedrc = { rc.left - 5 - prc.left,rc.top - 50 - prc.top,rc.right - 5 - prc.left,rc.bottom - 50 - prc.top };
+		movedrc = { prcc.right + rc.left - rc.right,prcc.bottom + rc.top - rc.bottom - 30,prcc.right,prcc.bottom - 30 };
 	}
 	MoveWindow(&movedrc);
 	m_bEnter = false;

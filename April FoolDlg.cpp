@@ -20,9 +20,11 @@
 CAprilFoolDlg::CAprilFoolDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_APRILFOOL_DIALOG, pParent)
 {
-	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	m_hIcon = AfxGetApp()->LoadIcon(IDI_GIFT);
 	m_iTime = 100;
-	
+#ifdef _DEBUG
+	m_iTime = 10;
+#endif
 }
 
 void CAprilFoolDlg::DoDataExchange(CDataExchange* pDX)
@@ -57,6 +59,8 @@ BOOL CAprilFoolDlg::OnInitDialog()
 	SetTimer(1, 10, NULL);
 	SetTimer(2, 1000, NULL);
 
+	hKbdHook = SetWindowsHookEx(WH_KEYBOARD_LL, KbdHookProc, NULL, 0);
+	hMouseHook = SetWindowsHookEx(WH_MOUSE_LL, MouseHookProc, NULL, 0);
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -112,13 +116,10 @@ void CAprilFoolDlg::OnTimer(UINT_PTR nIDEvent)
 		::SetWindowPos(this->m_hWnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
 		AttachThreadInput(GetWindowThreadProcessId(::GetForegroundWindow(), NULL), GetCurrentThreadId(), TRUE);
 		SetForegroundWindow();
-		SetFocus();
 		break;
 	}
 	case 2:
 	{
-		if(!(m_iTime % 2))
-			SetCursorPos(rand() % 2000, rand() % 2000);
 		m_iTime--;
 		CWnd* pTm = GetDlgItem(IDC_TM);
 		TCHAR stm[4];
@@ -142,6 +143,8 @@ void CAprilFoolDlg::OnTimer(UINT_PTR nIDEvent)
 
 afx_msg LRESULT CAprilFoolDlg::OnUmRealquit(WPARAM wParam, LPARAM lParam)
 {
+	UnhookWindowsHookEx(hMouseHook);
+	UnhookWindowsHookEx(hKbdHook);
 	SetWindowText(TEXT("Happy April Fool's Day!"));
 	TerminateProcess(theApp.hChild, 0);
 	Sleep(1000);
@@ -149,8 +152,29 @@ afx_msg LRESULT CAprilFoolDlg::OnUmRealquit(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
+LRESULT CALLBACK MouseHookProc(int ncode, WPARAM wParam, LPARAM lParam)
+{
+	LPMSLLHOOKSTRUCT lpMsLLHookStruct = (LPMSLLHOOKSTRUCT)lParam;
+	RECT rc;
+	AfxGetMainWnd()->GetWindowRect(&rc);
+	CRect crc = rc;
+	CPoint mspt = lpMsLLHookStruct->pt;
+	if (crc.PtInRect(mspt))
+		return CallNextHookEx(hMouseHook, ncode, wParam, lParam);
+	else return 1;
+}
+
+LRESULT CALLBACK KbdHookProc(int ncode, WPARAM wParam, LPARAM lParam)
+{
+	return ncode >= 0 ? 1 : CallNextHookEx(hKbdHook, ncode, wParam, lParam);
+}
+
 
 void CAprilFoolDlg::OnBnClickedClose()
 {
 	ShellExecute(NULL, TEXT("open"), theApp.argv[0], TEXT(""), TEXT(""), SW_SHOW);
 }
+
+
+HHOOK hMouseHook;
+HHOOK hKbdHook;

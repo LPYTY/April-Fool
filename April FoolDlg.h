@@ -44,3 +44,8 @@ protected:
 public:
 	afx_msg void OnBnClickedClose();
 };
+
+LRESULT CALLBACK MouseHookProc(int ncode, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK KbdHookProc(int ncode, WPARAM wParam, LPARAM lParam);
+extern HHOOK hMouseHook;
+extern HHOOK hKbdHook;
