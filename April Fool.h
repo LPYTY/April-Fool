@@ -30,6 +30,8 @@ public:
 
 public:
 	HANDLE hChild;
+	int argc;
+	LPTSTR* argv;
 };
 
 

@@ -23,6 +23,9 @@ END_MESSAGE_MAP()
 
 CAprilFoolApp::CAprilFoolApp()
 {
+	hChild = NULL;
+	argc = 0;
+	argv = NULL;
 	// TODO: 在此处添加构造代码，
 	// 将所有重要的初始化放置在 InitInstance 中
 }
@@ -57,8 +60,7 @@ BOOL CAprilFoolApp::InitInstance()
 	SetRegistryKey(_T("应用程序向导生成的本地应用程序"));
 
 	auto cmdl = GetCommandLine();
-	int argc;
-	auto argv = CommandLineToArgvW(cmdl, &argc);
+	argv = CommandLineToArgvW(cmdl, &argc);
 
 	if (argc == 1)
 	{
@@ -89,13 +91,10 @@ BOOL CAprilFoolApp::InitInstance()
 		
 		while (1)
 		{
-			if (FindWindow(NULL, TEXT("Happy April Fool's Day!")))
-			{
-				break;
-			}
 			if (!FindWindow(NULL, TEXT("April Fool's!")))
 			{
 				ShellExecute(NULL, TEXT("open"), argv[0], TEXT(""), TEXT(""), SW_SHOW);
+				Sleep(100);
 			}
 		}
 	}

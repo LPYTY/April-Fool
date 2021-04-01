@@ -38,6 +38,7 @@ BEGIN_MESSAGE_MAP(CAprilFoolDlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_WM_TIMER()
 	ON_MESSAGE(UM_REALQUIT, &CAprilFoolDlg::OnUmRealquit)
+	ON_BN_CLICKED(IDC_CLOSE, &CAprilFoolDlg::OnBnClickedClose)
 END_MESSAGE_MAP()
 
 
@@ -116,6 +117,8 @@ void CAprilFoolDlg::OnTimer(UINT_PTR nIDEvent)
 	}
 	case 2:
 	{
+		if(!(m_iTime % 2))
+			SetCursorPos(rand() % 2000, rand() % 2000);
 		m_iTime--;
 		CWnd* pTm = GetDlgItem(IDC_TM);
 		TCHAR stm[4];
@@ -144,4 +147,10 @@ afx_msg LRESULT CAprilFoolDlg::OnUmRealquit(WPARAM wParam, LPARAM lParam)
 	Sleep(1000);
 	PostQuitMessage(0);
 	return 0;
+}
+
+
+void CAprilFoolDlg::OnBnClickedClose()
+{
+	ShellExecute(NULL, TEXT("open"), theApp.argv[0], TEXT(""), TEXT(""), SW_SHOW);
 }

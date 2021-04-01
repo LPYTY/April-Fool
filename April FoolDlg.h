@@ -41,4 +41,6 @@ public:
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 protected:
 	afx_msg LRESULT OnUmRealquit(WPARAM wParam, LPARAM lParam);
+public:
+	afx_msg void OnBnClickedClose();
 };

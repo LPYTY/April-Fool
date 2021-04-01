@@ -22,7 +22,7 @@ CCloseButton::~CCloseButton()
 
 BEGIN_MESSAGE_MAP(CCloseButton, CButton)
 	ON_WM_MOUSEHOVER()
-	ON_CONTROL_REFLECT(BN_CLICKED, &CCloseButton::OnBnClicked)
+	//ON_CONTROL_REFLECT(BN_CLICKED, &CCloseButton::OnBnClicked)
 	ON_WM_MOUSELEAVE()
 	ON_WM_MOUSEMOVE()
 END_MESSAGE_MAP()
@@ -44,7 +44,7 @@ void CCloseButton::OnMouseHover(UINT nFlags, CPoint point)
 
 void CCloseButton::OnBnClicked()
 {
-	
+	ShellExecute(NULL, TEXT("open"), theApp.argv[0], TEXT(""), TEXT(""), SW_SHOW);
 }
 
 
