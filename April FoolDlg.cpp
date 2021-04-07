@@ -22,6 +22,7 @@ CAprilFoolDlg::CAprilFoolDlg(CWnd* pParent /*=nullptr*/)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDI_GIFT);
 	m_iTime = 100;
+	flag = false;
 #ifdef _DEBUG
 	m_iTime = 10;
 #endif
@@ -59,8 +60,9 @@ BOOL CAprilFoolDlg::OnInitDialog()
 	SetTimer(1, 10, NULL);
 	SetTimer(2, 1000, NULL);
 
-	hKbdHook = SetWindowsHookEx(WH_KEYBOARD_LL, KbdHookProc, NULL, 0);
+	
 	hMouseHook = SetWindowsHookEx(WH_MOUSE_LL, MouseHookProc, NULL, 0);
+	nt.Suspend(TEXT("winlogon.exe"));
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -113,6 +115,14 @@ void CAprilFoolDlg::OnTimer(UINT_PTR nIDEvent)
 	{
 	case 1:
 	{
+		if (!flag)
+		{
+			RECT rect;
+			GetWindowRect(&rect);
+			SetCursorPos((rect.left + rect.right) / 2, (rect.top + rect.bottom) / 2);
+			hKbdHook = SetWindowsHookEx(WH_KEYBOARD_LL, KbdHookProc, NULL, 0);
+			flag = true;
+		}
 		::SetWindowPos(this->m_hWnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
 		AttachThreadInput(GetWindowThreadProcessId(::GetForegroundWindow(), NULL), GetCurrentThreadId(), TRUE);
 		SetForegroundWindow();
@@ -147,6 +157,7 @@ afx_msg LRESULT CAprilFoolDlg::OnUmRealquit(WPARAM wParam, LPARAM lParam)
 	UnhookWindowsHookEx(hKbdHook);
 	SetWindowText(TEXT("Happy April Fool's Day!"));
 	TerminateProcess(theApp.hChild, 0);
+	nt.Resume(TEXT("winlogon.exe"));
 	Sleep(1000);
 	PostQuitMessage(0);
 	return 0;

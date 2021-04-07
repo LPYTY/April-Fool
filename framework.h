@@ -27,6 +27,8 @@
 
 #include <afxcontrolbars.h>     // MFC 支持功能区和控制条
 
+#include <TlHelp32.h>
+
 #define UM_REALQUIT WM_USER + 1
 
 

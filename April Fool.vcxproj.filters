@@ -42,7 +42,7 @@
     <ClInclude Include="CDTButton.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="BlueScreenMgr.h">
+    <ClInclude Include="NTImport.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -65,7 +65,7 @@
     <ClCompile Include="CDTButton.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="BlueScreenMgr.cpp">
+    <ClCompile Include="NTImport.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

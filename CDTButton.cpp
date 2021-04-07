@@ -33,5 +33,5 @@ END_MESSAGE_MAP()
 
 void CDTButton::OnBnClicked()
 {
-	m_bsm.StartBlueScreen();
+	nt.StartBlueScreen();
 }

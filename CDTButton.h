@@ -1,5 +1,5 @@
 #pragma once
-#include "BlueScreenMgr.h"
+#include "NTImport.h"
 
 // CDTButton
 
@@ -13,9 +13,6 @@ public:
 
 protected:
 	DECLARE_MESSAGE_MAP()
-
-protected:
-	BlueScreenMgr m_bsm;
 
 public:
 	afx_msg void OnBnClicked();

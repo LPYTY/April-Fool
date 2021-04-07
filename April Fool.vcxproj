@@ -115,9 +115,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
+      <UACUIAccess>false</UACUIAccess>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -185,7 +187,7 @@
   <ItemGroup>
     <ClInclude Include="April Fool.h" />
     <ClInclude Include="April FoolDlg.h" />
-    <ClInclude Include="BlueScreenMgr.h" />
+    <ClInclude Include="NTImport.h" />
     <ClInclude Include="CCloseButton.h" />
     <ClInclude Include="CDTButton.h" />
     <ClInclude Include="CQuitButton.h" />
@@ -197,7 +199,7 @@
   <ItemGroup>
     <ClCompile Include="April Fool.cpp" />
     <ClCompile Include="April FoolDlg.cpp" />
-    <ClCompile Include="BlueScreenMgr.cpp" />
+    <ClCompile Include="NTImport.cpp" />
     <ClCompile Include="CCloseButton.cpp" />
     <ClCompile Include="CDTButton.cpp" />
     <ClCompile Include="CQuitButton.cpp" />
